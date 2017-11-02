@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Wikepedia Viewer</title>
+	<title>Wikipedia Viewer</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<center>
-	<img src= "http://i.telegraph.co.uk/multimedia/archive/03068/Poland-Wikipedia-M_3068568n.jpg">
-	</center>
+	<main id="container"
 	<header>
-		<input type="text" Name="search" placeholder="Search Any Article" id="search-button">
-		<input type="submit" name="Click to get results">
+		<h2><u>Wikipedia Links</u></h2>
 	</header>
-
+		<section id="image-wiki">
+			<center>
+				<img src= "http://i.telegraph.co.uk/multimedia/archive/03068/Poland-Wikipedia-M_3068568n.jpg">
+ 			</center>
+		</section>
+	
+		<section>
+			<input type="text" Name="search" placeholder="Search to get specific article" id="search-button">
+		</section>
+		<section class="random-article">
+			<a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" id="random-search">Search any Random Article</a>
+		</section>
+		<section class="retrivePages">
+		</section>
+	</main>
+<script src="main.js"></script>
 </body>
 </html>

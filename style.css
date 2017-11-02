@@ -1,10 +1,13 @@
-#search-button{
-
-	margin-left: 16cm;
-	margin-top: 1cm;
+h2{
+	text-align: center;
 }
-#submit-button{
-	display: inline-block;
+#search-button{
+	margin-left: 15.5cm;
+	margin-top: 0.4cm;
 
+}
+#random-search{
+margin-left: 15.5cm;
+margin-top: 1cm;
 
 }
