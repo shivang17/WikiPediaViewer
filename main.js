@@ -6,12 +6,13 @@
 // 	fetchURL(endpoint);
 // };
 
-function getURL(search)
+function getURL()
 {
-	let url ="https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&list=search&srlimit=5&format=json&srsearch=";
-	search=search.replace('', '%20');
-	url +=search;
-	fetchURL(search);
+	let url="https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&format=json&search=" 
+	var searchObj= document.getElementById("search-button").value;
+	searchObj=searchObj.replace(' ', '%20');
+	url +=searchObj;
+	return url;
 }
 
 
@@ -20,48 +21,57 @@ function getURL(search)
 // 	fetch(endpoint).then(value=> value.json()).then(data=>retrivePages(data))
 // };
 
-function fetchURL(endpoint){
-		fetch(endpoint).then(value=>value.json()).then(data=>pageRetrive(data))
+function fetchURL(url){
+
+	var endpoint= getURL();
+
+	fetch(getURL())
+	.then(data=>data.json())
+	.then(value=>getPages(value));
 }
 
 
 // let retrivePages= (data)=>
-function retrivePages(data) 
+function getPages(value) 
 {
+	console.log(value);
 	let page= document.querySelector(".retrivePages");
 	while(page.firstChild)
 	{
 		page.removeChild(page.firstChild);
 
 	}
-		for(let i=0; i<data.query.search.length; i++)
+		for(let i=0; i<value[1].length; i++)
 		{
+			let title= value[1][i];
+			let snippet= value[2][i];
+			let pages=  value[3][i];
+			//let page= 'https://en.wikipedia.org/?curid=$(pageID)';
+			console.log(title,snippet,pages);
 
-		let title= data.query.search[i].title;
-		let snippet= data.query.search[i].snippet;
-		let pageID=data.query.search[i].pageID;
-		let href = document.createElement("a");
-				href.setAttribute("href",page);
-				href.setAttribute("target","_blank");
-		href.className= "pageRedirect";
-		let div= document.createElement("div");
-		let head= document.createElement("h2");
-		var content= document.createElement("p");
-		var textNode= document.createTextNode("$(title)");
-		content.innerHTML= snippet;
-		head.appendChild(textNode);
-		div.appendChild(head);
-		div.appendChild(content);
-		div.className="content";
-		href.appendChild(div);
-		page.appned(href);
+			// document.getElementById("1").appendChild(title);
+			// document.getElementById("2").appendChild(page);
+			// document.getElementById("3").appendChild(snippet);
+			var tableRows= 
+			document.createElement("tr");
+			var tableData1=document.createElement("td");
+			var tableData2=document.createElement("td");
+			var textNode1= document.createTextNode(title);
+			var textNode2= document.createTextNode(snippet);
+			var aTag=document.createElement("a");
+			aTag.appendChild(textNode1);	
+			aTag.setAttribute("href",pages);
+			aTag.setAttribute("target","_blank");
+			tableData1.appendChild(aTag);
+			tableData2.appendChild(textNode2);
+			tableRows.appendChild(tableData1);
+			tableRows.appendChild(tableData2);
+			page.appendChild(tableRows);
+
+
 
 		}
-
-
-}
-
-
+ }
 
 // let keyPressCall=(e) =>
 function keyPressCall(e) 
@@ -71,7 +81,7 @@ function keyPressCall(e)
 		var valueFromInput = document.querySelector("input").value;
 		document.querySelector("#container").style.marginTop = "5%";
 		document.querySelector("#container").style.marginBottom = "5%";
-		getURL(valueFromInput);
+		fetchURL(valueFromInput);
 	}
 }
 
